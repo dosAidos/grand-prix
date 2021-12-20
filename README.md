@@ -1,13 +1,11 @@
 # Projeto Grand Prix
 ## FP/L.EIC, 2021/22
 ## Inês Aidos (up201107323)
-## 1LEICXX
+## 1LEIC05
 
 ### Objetivo
 
-1. Criar um clone do clássico Sokoban em Pygame...
-
-2. Em alternativa... do clássico x em Pygame.
+1. Criar uma versão alternativa do clássico Grand-Prix em Pygame...
 
 ### Repositório de código
 
@@ -15,9 +13,8 @@
 
 ### Descrição
 
-*---É um jogo de puzzle em que o objetivo do jogo é empurrar caixotes para um sítio indicado. 
-Para empurrar o caixote é preciso ir ao outro lado empurrá-lo. 
-Ou seja, se ele ficar junto à parede, a pessoa precisa de reiniciar o jogo. Estamos a utilizar os níveis do XSokoban.---*
+*---É um jogo de corrida de carros em que o objetivo do jogo é ultrapassar os oponentes e chegar ao fim da pista o mais rápido possível. 
+Ao longo da pista o jogador deparar-se-á com obstáculos que poderá "alvejar" de modo a ganhar pontos.---*
 
 ### UI
 
@@ -29,9 +26,6 @@ Ou seja, se ele ficar junto à parede, a pessoa precisa de reiniciar o jogo. Est
 
 ### Tarefas
 
-1. carregar os níveis
-1. desenhar a matriz do nível
-1. ler teclas e mover as peças
-2. verificar se jogador chegou ao fim do nível
+1. 
 
-- Atualizado a última vez em 15/12/2021
+- Atualizado a última vez em 20/12/2021
