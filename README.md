@@ -19,7 +19,7 @@ Durante o jogo vão aparecendo carros a circular na pista, os quais devem ser ul
 
 ### UI
 
-![UI](images\ui\example.png)
+![UI](images/ui/example.png)
 
 ### Pacotes
 
