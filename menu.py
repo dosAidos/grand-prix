@@ -71,7 +71,7 @@ class Rules:
                                 Position(Menu.SCREEN_SIZE.w/2, Menu.SCREEN_SIZE.h/2-50),
                                 """To play you can use the following commands:
                                 \n-   UP ARROW to accelerate;
-                                \n-   DOWN ARROW to break;
+                                \n-   DOWN ARROW to brake;
                                 \n-   LEFT ARROW to move left;
                                 \n-   RIGHT ARROW to move right;
                                 \n-   SPACE BAR to shoot bullets;

@@ -6,6 +6,7 @@ class Opponent(Sprite):
     CLR = (10, 10, 10)
     IMG_PATH = "images/opponents/opponent.png"
     SIZE = Size(CAR_W, CAR_L)
+    SIDE_MIRROR = 15
 
     EVENT = 4
     T_RANGE = 1500, 2500
@@ -17,7 +18,7 @@ class Opponent(Sprite):
         self.img = pygame.image.load(self.IMG_PATH).convert()
         image_size = Size(self.img.get_width(), self.img.get_height())
         image_scale = image_size.get_scale()
-        self.size.h = self.size.w // image_scale
+        self.size.h = self.size.w // image_scale - 3
         self.img = pygame.transform.scale(self.img, (self.size.w, self.size.h))
         self.img.set_colorkey((0, 0, 0))
 
@@ -26,6 +27,12 @@ class Opponent(Sprite):
 
     def update(self, div_speed):
         self.pos.y -= self.speed - div_speed
+
+    def left_corner(self):
+        return self.pos.x - self.size.w // 2 + self.SIDE_MIRROR
+
+    def right_corner(self):
+        return self.pos.x + self.size.w // 2 - self.SIDE_MIRROR
 
 
 class Bullet(Sprite):

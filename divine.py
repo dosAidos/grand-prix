@@ -4,16 +4,18 @@ from sprites import *
 class Divine(Sprite):
     CLR = (255, 0, 200)
     IMG_PATH = "images/divine/divine.png"
+    FLAMES_PATH = "images/divine/flames.png"
     CRASH_SOUND = "sounds/short_crash.mp3"
     POS = Position(SCREEN_SIZE.w / 2, SCREEN_SIZE.h)
     SIZE = Size(CAR_W, CAR_L)
+    FLAMES_SIZE = Size(100, 100)
     MAX_SPEED = 10
 
     def __init__(self, screen):
         super().__init__(screen, self.POS, self.SIZE, self.CLR)
         self.speed = 0
         self.accelerating = False
-        self.breaking = False
+        self.braking = False
         self.moving_left = False
         self.moving_right = False
 
@@ -27,8 +29,15 @@ class Divine(Sprite):
         self.img = pygame.transform.scale(self.img, (self.size.w, self.size.h))
         self.img.set_colorkey((0, 0, 0))
 
+        self.end = False
+        self.flames = pygame.image.load(self.FLAMES_PATH).convert()
+        self.flames = pygame.transform.scale(self.flames, (self.FLAMES_SIZE.w, self.FLAMES_SIZE.h))
+        self.flames.set_colorkey((0, 0, 0))
+
+
     def draw(self):
         self.screen.blit(self.img, (self.pos.x-self.size.w/2, self.pos.y-self.size.h/2))
+        self.screen.blit(self.flames, (self.pos.x - self.size.w / 2 + 12, self.pos.y + self.size.h / 2 + 7))
 
     def update(self, _):
         if not(self.moving_left and self.moving_right):
@@ -37,10 +46,10 @@ class Divine(Sprite):
             if self.moving_right:
                 self.move_right(5)
 
-        if not(self.accelerating and self.breaking):
+        if not(self.accelerating and self.braking):
             if self.accelerating and self:
                 self.speed_up(.015)
-            elif self.breaking and self:
+            elif self.braking and self:
                 self.slow_down(.1)
             else:
                 self.slow_down(.02)
@@ -52,11 +61,12 @@ class Divine(Sprite):
         self.pos.x += val
 
     def finish(self, speed):
+        self.end = True
         self.pos.y -= speed
 
     def collision(self):
         pygame.mixer.Sound.play(self.crash_sound)
-        self.slow_down(1)
+        self.slow_down(5)
         self.moving_left = not self.moving_left
         self.moving_right = not self.moving_right
 

@@ -50,11 +50,14 @@ class Game:
             pygame.display.update()
 
         i = 0
+        #while i <= 1:
         while i <= len(VICTIMS_IMAGES):
             for event in pygame.event.get():
                 if event.type == QUIT:
                     return QUIT_STATE
                 elif event.type == pygame.KEYDOWN:
+                    if event.key == K_SPACE:
+                        self.bullets.append(self.divine.fire())
                     if event.key == pygame.K_LEFT:
                         self.divine.moving_left = True
                     if event.key == K_RIGHT:
@@ -62,9 +65,7 @@ class Game:
                     if event.key == K_UP:
                         self.divine.accelerating = True
                     if event.key == K_DOWN:
-                        self.divine.breaking = True
-                    if event.key == K_SPACE:
-                        self.bullets.append(self.divine.fire())
+                        self.divine.braking = True
                 elif event.type == pygame.KEYUP:
                     if event.key == pygame.K_LEFT:
                         self.divine.moving_left = False
@@ -73,7 +74,7 @@ class Game:
                     if event.key == K_UP:
                         self.divine.accelerating = False
                     if event.key == K_DOWN:
-                        self.divine.breaking = False
+                        self.divine.braking = False
                 elif event.type == SEC_EVENT:
                     self.time_spent += 1
                     self.time_txt = self.time_font.render(str(self.time_spent), True, TIME_CLR)
@@ -117,13 +118,13 @@ class Game:
             if self.divine.hits(self.bkg.frontiers[1]):
                 self.divine.moving_right = False
 
-            for obst in self.opponents:
-                if self.divine.hits(obst):
+            for opp in self.opponents:
+                if opp.hits(self.divine):
                     self.divine.collision()
                     self.bkg.collision()
                     pygame.time.set_timer(END_COL_EVENT, 150, 1)
 
-            objects = [self.bkg, self.divine] + self.victims + self.opponents + self.bullets
+            objects = [self.bkg, self.divine] + self.opponents + self.victims + self.bullets
             for obj in objects:
                 obj.update(self.divine.speed)
             for obj in objects:
@@ -162,13 +163,19 @@ class Game:
                         quit_btn.press_down()
                 elif event.type == pygame.MOUSEBUTTONUP:
                     if menu_btn.clicked(pygame.mouse):
+                        pygame.mixer.music.load('sounds/tgchi.mp3')
+                        pygame.mixer.music.play(-1)
                         return MENU_STATE
                     if quit_btn.clicked(pygame.mouse):
                         return QUIT_STATE
 
             self.divine.finish(.7)
+            for opp in self.opponents:
+                opp.update(2)
 
             self.bkg.draw()
+            for opp in self.opponents:
+                opp.draw()
             if self.divine.bottom_corner() >= 0:
                 self.divine.draw()
             for btn in buttons:
@@ -177,10 +184,6 @@ class Game:
             self.screen.blit(self.drag_txt, (DRAG_POS.x, DRAG_POS.y))
             pygame.display.flip()
             pygame.display.update()
-
-        pygame.mixer.music.load('sounds/tgchi.mp3')
-        pygame.mixer.music.play(-1)
-        return MENU_STATE
 
     @staticmethod
     def remove_from_screen(obj_list):
