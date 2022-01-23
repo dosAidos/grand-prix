@@ -176,7 +176,7 @@ class Game:
             self.bkg.draw()
             for opp in self.opponents:
                 opp.draw()
-            if self.divine.bottom_corner() >= 0:
+            if self.divine.bottom_corner()+Divine.FLAMES_SIZE.h >= 0:
                 self.divine.draw()
             for btn in buttons:
                 btn.draw()
